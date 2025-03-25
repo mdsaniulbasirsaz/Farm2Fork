@@ -1,0 +1,6 @@
+@Farm2Fork_HostAddress = http://localhost:5177
+
+GET {{Farm2Fork_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
