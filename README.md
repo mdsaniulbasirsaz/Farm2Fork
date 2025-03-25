@@ -24,7 +24,7 @@ Before you begin, ensure you have the following installed:
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/Farm2Fork.git
+git clone https://github.com/mdsaniulbasirsaz/Farm2Fork.git
 cd Farm2Fork
 ```
 ### 2. Install dependencies
