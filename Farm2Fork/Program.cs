@@ -1,14 +1,32 @@
 using Microsoft.EntityFrameworkCore;
 using Farm2Fork.Data;
+using Farm2Fork.Services.Interfaces;
+using Farm2Fork.Repositories.Implementations;
+using Farm2Fork.Repositories.Interfaces;
+using Farm2Fork.Services.Implementations;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Load configuration
+var configuration = builder.Configuration;
 
-// Add OpenAPI/Swagger
+// **1. Add Database Context (Example with PostgreSQL)**
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+// **2. Add Services to DI Container**
+builder.Services.AddScoped<IUserRepository, UserRepository>(); 
+builder.Services.AddScoped<IUserService, UserService>();  // Register IUserService and UserService
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
+// **3. Add Swagger Documentation**
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -19,14 +37,26 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Add controllers
-builder.Services.AddControllers();
+// **4. Configure CORS (For Frontend Integration)**
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        policy => policy.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+});
 
+// **5. Add Authentication & Authorization (Optional for Future Use)**
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+
+// **6. Build App**
 var app = builder.Build();
 
-// Configure Swagger middleware
+// **7. Configure Middleware Pipeline**
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
@@ -34,29 +64,12 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+// **8. Middleware Configuration**
 app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
+app.UseCors("AllowAllOrigins"); // Apply CORS Policy
+app.UseAuthentication(); // Future-proof authentication
+app.UseAuthorization(); // Future-proof authorization
+app.MapControllers(); // Map API controllers
 
-var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
+// **9. Run Application**
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

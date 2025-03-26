@@ -1,37 +1,55 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Farm2Fork.Models;
+using Farm2Fork.Services.Interfaces; // Add this
 using System.Collections.Generic;
 using Farm2Fork.Data;
+using Farm2Fork.DTOs;
 
 namespace Farm2Fork.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/v1")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IUserService _userService;
 
-        public UserController(AppDbContext context)
+        public UserController(IUserService userService)
         {
-            _context = context;
+            _userService = userService;
         }
 
         // GET: api/user
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return Ok(
+                await _userService.GetUsersAsync()
+            );
         }
 
-        // POST: api/user
-        [HttpPost]
-        public async Task<ActionResult<User>> CreateUser(User user)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _userService.RegisterUserAsync(registerDto);
+                return Ok("User registered successfully.");
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Return a bad request with the exception message
+                return BadRequest(ex.Message);
+            }
+        }
 
-            return CreatedAtAction(nameof(GetUsers), new { id = user.Id }, user);
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        {
+            var authenticatedUser = await _userService.AuthenticateUserAsync(loginDto.Email, loginDto.Password);
+            if (authenticatedUser == null) return Unauthorized("Invalid credentials");
+            
+            return Ok(authenticatedUser);
         }
     }
 }
