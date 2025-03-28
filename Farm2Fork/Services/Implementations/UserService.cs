@@ -41,14 +41,29 @@ namespace Farm2Fork.Services.Implementations
             }
         }
 
-        public async Task<User?> AuthenticateUserAsync(string email, string password)
+        public async Task<ProfileDto?> AuthenticateUserAsync(string email, string password)
         {
             var user = await _userRepository.GetUserByEmailAsync(email);
-            if (user == null || user.Password != password) return null;
-            return user;
+                if (user == null || user.Password != password) 
+                    return null;
+
+                if (!user.IsVerified) 
+                    return null;
+
+                var userDetails = new ProfileDto
+                {
+                    Name = user.Name,
+                    Email = user.Email,
+                    UserType = user.UserType,
+                    IsVerified = user.IsVerified,
+                    CreatedAt = user.CreatedAt
+                };
+
+                return userDetails;
         }
 
-        public async Task<User?> GetUserByIdAsync(int id)  // Add this method
+
+        public async Task<User?> GetUserByIdAsync(int id)  
         {
             return await _userRepository.GetUserByIdAsync(id);
         }

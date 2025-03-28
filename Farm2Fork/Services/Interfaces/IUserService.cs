@@ -8,7 +8,7 @@ namespace Farm2Fork.Services.Interfaces
     {
         Task<IEnumerable<User>> GetUsersAsync();
         Task<User?> RegisterUserAsync(RegisterDto registerDto);
-        Task<User?> AuthenticateUserAsync(string email, string password);
+        Task<ProfileDto?> AuthenticateUserAsync(string email, string password);
         Task<User?> GetUserByIdAsync(int id); // Add this line
     }
 }
