@@ -4,6 +4,7 @@ using Farm2Fork.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Farm2Fork.DTOs;
+using BCrypt.Net;
 
 namespace Farm2Fork.Services.Implementations
 {
@@ -24,10 +25,12 @@ namespace Farm2Fork.Services.Implementations
         public async Task<User?> RegisterUserAsync(RegisterDto registerDto)
         {
             try{
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
                 var user = new User
                 {
                     Email = registerDto.Email,
-                    Password = registerDto.Password,
+                    // Password = registerDto.Password,
+                    Password = hashedPassword,
                     Name = registerDto.Name,
                     UserType = registerDto.UserType,
                     IsVerified = false,
@@ -44,7 +47,7 @@ namespace Farm2Fork.Services.Implementations
         public async Task<ProfileDto?> AuthenticateUserAsync(string email, string password)
         {
             var user = await _userRepository.GetUserByEmailAsync(email);
-                if (user == null || user.Password != password) 
+                if (user == null ||!BCrypt.Net.BCrypt.Verify(password,user.Password)) 
                     return null;
 
                 if (!user.IsVerified) 

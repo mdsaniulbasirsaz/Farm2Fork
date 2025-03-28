@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Farm2Fork")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2a87267ff23150471d252c5d2d925049e97e0a1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f46f422b6332e14b667337aff58464a8210ea56f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Farm2Fork")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Farm2Fork")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

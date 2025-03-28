@@ -133,3 +133,4 @@ C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\obj\Debug\net9.0\refint\Farm
 C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\obj\Debug\net9.0\Farm2Fork.pdb
 C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\obj\Debug\net9.0\Farm2Fork.genruntimeconfig.cache
 C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\obj\Debug\net9.0\ref\Farm2Fork.dll
+C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\bin\Debug\net9.0\BCrypt.Net-Next.dll
