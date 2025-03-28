@@ -134,3 +134,9 @@ C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\obj\Debug\net9.0\Farm2Fork.p
 C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\obj\Debug\net9.0\Farm2Fork.genruntimeconfig.cache
 C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\obj\Debug\net9.0\ref\Farm2Fork.dll
 C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\bin\Debug\net9.0\BCrypt.Net-Next.dll
+C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\bin\Debug\net9.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\bin\Debug\net9.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\bin\Debug\net9.0\Microsoft.AspNetCore.Razor.Language.dll
+C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\bin\Debug\net9.0\Microsoft.CodeAnalysis.Razor.dll
+C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\bin\Debug\net9.0\Newtonsoft.Json.dll
+C:\Users\saniu\OneDrive\Desktop\Farm2Fork\Farm2Fork\bin\Debug\net9.0\Newtonsoft.Json.Bson.dll

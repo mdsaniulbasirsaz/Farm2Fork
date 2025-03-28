@@ -10,5 +10,6 @@ namespace Farm2Fork.Services.Interfaces
         Task<User?> RegisterUserAsync(RegisterDto registerDto);
         Task<ProfileDto?> AuthenticateUserAsync(string email, string password);
         Task<User?> GetUserByIdAsync(int id); // Add this line
+        Task<bool> VerifyOtpAsync(string email, string otp);
     }
 }

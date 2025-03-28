@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Farm2Fork.Repositories;
+using Farm2Fork.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // **2. Add Services to DI Container**
 builder.Services.AddScoped<IUserRepository, UserRepository>(); 
 builder.Services.AddScoped<IUserService, UserService>();  // Register IUserService and UserService
+builder.Services.AddScoped<IOtpRepository, OtpRepository>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 

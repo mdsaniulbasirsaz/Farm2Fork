@@ -34,12 +34,28 @@ namespace Farm2Fork.Controllers
             try
             {
                 await _userService.RegisterUserAsync(registerDto);
-                return Ok("User registered successfully.");
+                return Ok("User registered successfully. Please verify your email.");
             }
             catch (InvalidOperationException ex)
             {
                 // Return a bad request with the exception message
                 return BadRequest(ex.Message);
+            }
+        }
+
+      
+        [HttpPost("verify-otp")]
+        public async Task<IActionResult> VerifyOtp([FromBody] OtpVerificationDto verifyOtpDto)
+        {
+            var isVerified = await _userService.VerifyOtpAsync(verifyOtpDto.Email, verifyOtpDto.Otp);
+
+            if (isVerified)
+            {
+                return Ok(new { message = "OTP verified successfully!" });
+            }
+            else
+            {
+                return BadRequest(new { message = "Invalid OTP or OTP has expired." });
             }
         }
 
