@@ -11,7 +11,6 @@ namespace Farm2Fork.Data
 
         public DbSet<User> Users {get; set;}
         public DbSet<OtpRecord> OtpRecords { get; set; }
-        // Define your DbSets here. For example:
-        // public DbSet<Product> Products { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
