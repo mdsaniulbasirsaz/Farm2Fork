@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Farm2Fork.Models;
 using Farm2Fork.Repositories.Interfaces;
-using Farm2Fork.Helpers; // No need to inject ImageHelper
+using Farm2Fork.Helpers;
 using Farm2Fork.Services.Interfaces;
 
 namespace Farm2Fork.Services.Implementations
@@ -22,7 +22,7 @@ namespace Farm2Fork.Services.Implementations
             return await _productRepository.GetAllProductsAsync();
         }
 
-        public async Task AddProductAsync(Product product) 
+        public async Task AddProductAsync(Product product)
         {
             if (!string.IsNullOrEmpty(product.ImageUrl))
             {
@@ -32,6 +32,11 @@ namespace Farm2Fork.Services.Implementations
             }
 
             await _productRepository.AddProductAsync(product);
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsByPriceRange(decimal minPrice, decimal maxPrice)
+        {
+            return await _productRepository.GetProductsByPriceRange(minPrice, maxPrice);
         }
     }
 }

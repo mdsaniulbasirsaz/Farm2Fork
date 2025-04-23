@@ -10,5 +10,8 @@ namespace Farm2Fork.Repositories.Interfaces
         Task AddProductAsync(Product product);
         // Task UpdateProductAsync(Product product);
         // Task DeleteProductAsync(int id);
+
+        Task<IEnumerable<Product>> GetProductsByPriceRange(decimal minPrice, decimal maxPrice);
+        
     }
 }

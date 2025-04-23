@@ -28,7 +28,7 @@ namespace Farm2Fork.Controllers
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
         {
             var products = await _productService.GetAllProductsAsync();
-            return Ok(products); 
+            return Ok(products);
         }
 
         [HttpPost("add-product")]
@@ -49,6 +49,18 @@ namespace Farm2Fork.Controllers
             }
 
             return CreatedAtAction(nameof(GetAllProducts), new { id = product.Id }, product);
+        }
+
+        [HttpGet("price-range")]
+        public async Task<IActionResult> GetProductsByPriceRange([FromQuery] decimal min, [FromQuery] decimal max)
+        {
+            var products = await _productService.GetProductsByPriceRange(min, max);
+
+            if (products == null || !products.Any())
+            {
+                return Ok("No products found in the specified price range.");
+            }
+            return Ok(products);
         }
 
     }
