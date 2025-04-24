@@ -38,5 +38,11 @@ namespace Farm2Fork.Services.Implementations
         {
             return await _productRepository.GetProductsByPriceRange(minPrice, maxPrice);
         }
+
+        public async Task<IEnumerable<Product>> FuzzySearchByName(string searchTerm)
+        {
+            return await _productRepository.FuzzySearchByName(searchTerm);
+        }
+
     }
 }

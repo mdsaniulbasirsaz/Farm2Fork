@@ -12,6 +12,8 @@ namespace Farm2Fork.Services.Interfaces
         // Task UpdateProductAsync(Product product);
         // Task DeleteProductAsync(int id);
 
-        Task<IEnumerable<Product>> GetProductsByPriceRange(decimal minPrice, decimal maxPrice);
+        Task<IEnumerable<Product>> GetProductsByPriceRange(decimal minPrice, decimal maxPrice); // Product search by range
+        Task<IEnumerable<Product>> FuzzySearchByName(string searchTerm); //Product search by name(Product Name)
+
     }
 }

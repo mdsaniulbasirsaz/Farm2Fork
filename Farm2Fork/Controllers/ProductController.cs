@@ -63,5 +63,22 @@ namespace Farm2Fork.Controllers
             return Ok(products);
         }
 
+        [HttpGet("search-by-name")]
+        public async Task<ActionResult<IEnumerable<Product>>> FuzzySearchByName([FromQuery] string searchTerm)
+        {
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                return BadRequest("Search term is required");
+            }
+
+            var result = await _productService.FuzzySearchByName(searchTerm);
+            if (result == null || !result.Any())
+            {
+                return NotFound("No products found matching the search term.");
+            }
+
+            return Ok(result);
+        }
+
     }
 }
